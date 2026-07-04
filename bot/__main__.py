@@ -8,7 +8,13 @@ from .config import *
 from .worker import *
 from .devtools import *
 from .FastTelethon import *
+from health import start_health_server_in_background
 LOGS.info("Starting...")
+
+# Start a tiny HTTP server so Render sees this service as alive.
+# This runs in a background thread and does not affect the bot's own logic.
+start_health_server_in_background()
+LOGS.info("Health check server started.")
 
 try:
     bot.start(bot_token=BOT_TOKEN)
